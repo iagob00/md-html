@@ -1,0 +1,10 @@
+
+    <rss version="2.0">
+    <channel>
+        <title>Markdown Site Feed</title>
+        <link>/</link>
+        <description>Atualizações do site gerado</description>
+        <item><title>Exemplo</title><link>exemplo.html</link></item>
+    </channel>
+    </rss>
+    
