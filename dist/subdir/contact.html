@@ -3,20 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ title }}</title>
+    <title>Contact</title>
     <link rel="stylesheet" href="/assets/styles.css">
     <link rel="stylesheet" href="/pygments.css">
 </head>
 <body>
 <nav>
     <a href="index.html">Início</a>
-    {% for crumb in breadcrumbs %}
-    > <a href="{{ crumb }}">{{ crumb }}</a>
-    {% endfor %}
+    
+    > <a href="subdir">subdir</a>
+    
+    > <a href="contact.html">contact.html</a>
+    
 </nav>
 
 <main>
-    <div>{{ content|safe }}</div>
+    <div><h1>Contato</h1>
+<p>Entre em contato pelo e-mail: iago.soares051@academico.ifs.edu.br</p></div>
 </main>
 
 <footer>

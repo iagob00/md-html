@@ -3,20 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ title }}</title>
+    <title>Index</title>
     <link rel="stylesheet" href="/assets/styles.css">
     <link rel="stylesheet" href="/pygments.css">
 </head>
 <body>
 <nav>
     <a href="index.html">Início</a>
-    {% for crumb in breadcrumbs %}
-    > <a href="{{ crumb }}">{{ crumb }}</a>
-    {% endfor %}
+    
+    > <a href="index.html">index.html</a>
+    
 </nav>
 
 <main>
-    <div>{{ content|safe }}</div>
+    <h1>Index</h1>
+    <div><h1>Bem-vindo ao Meu Site</h1>
+<p>Esse site foi gerado a partir de arquivos Markdown.</p>
+<h2>Seções</h2>
+<ul>
+<li><a href="about.html">Sobre</a></li>
+<li><a href="subdir/contact.html">Contato</a></li>
+</ul></div>
 </main>
 
 <footer>

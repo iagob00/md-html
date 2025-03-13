@@ -2,33 +2,45 @@ import os
 import shutil
 import markdown
 import json
-#import feedparser
+import cssmin
+import jsmin
 from jinja2 import Environment, FileSystemLoader
 from pygments.formatters.html import HtmlFormatter
 
 # Diretórios de entrada e saída
 DOCS_DIR = "./docs"
 DIST_DIR = "./dist"
-ASSETS_DIR = "assets"
+ASSETS_DIR = "./assets"
+DIST_ASSETS_DIR = os.path.join(DIST_DIR, "assets")
 SEARCH_INDEX = os.path.join(DIST_DIR, "search_index.json")
 RSS_FEED = os.path.join(DIST_DIR, "feed.xml")
 
-# Configurar Jinja2 para templates
+# Configurar Jinja2
 env = Environment(loader=FileSystemLoader("templates"))
 
 search_data = []
 
 
 def copy_assets():
-    """Copia os arquivos de assets para a pasta de distribuição"""
-    src = os.path.join(DOCS_DIR, ASSETS_DIR)
-    dest = os.path.join(DIST_DIR, ASSETS_DIR)
-    if os.path.exists(src):
-        shutil.copytree(src, dest, dirs_exist_ok=True)
+    if os.path.exists(ASSETS_DIR):
+        shutil.copytree(ASSETS_DIR, DIST_ASSETS_DIR, dirs_exist_ok=True)
 
+    # Minificar CSS e JS
+    for root, _, files in os.walk(DIST_ASSETS_DIR):
+        for file in files:
+            file_path = os.path.join(root, file)
+            if file.endswith(".css"):
+                with open(file_path, "r", encoding="utf-8") as f:
+                    minified = cssmin.cssmin(f.read())
+                with open(file_path, "w", encoding="utf-8") as f:
+                    f.write(minified)
+            elif file.endswith(".js"):
+                with open(file_path, "r", encoding="utf-8") as f:
+                    minified = jsmin.jsmin(f.read())
+                with open(file_path, "w", encoding="utf-8") as f:
+                    f.write(minified)
 
 def convert_md_to_html(md_path):
-    """Converte um arquivo Markdown para HTML"""
     with open(md_path, "r", encoding="utf-8") as f:
         md_content = f.read()
 
@@ -37,7 +49,6 @@ def convert_md_to_html(md_path):
 
 
 def process_markdown_files():
-    """Busca todos os arquivos .md e converte para HTML mantendo a estrutura"""
     global search_data
     for root, _, files in os.walk(DOCS_DIR):
         for file in files:
@@ -60,20 +71,17 @@ def process_markdown_files():
 
 
 def generate_syntax_highlight_css():
-    """Gera um CSS para realce de código-fonte"""
     css_path = os.path.join(DIST_DIR, "pygments.css")
     with open(css_path, "w", encoding="utf-8") as f:
         f.write(HtmlFormatter().get_style_defs(".codehilite"))
 
 
 def generate_search_index():
-    """Cria um índice de busca local"""
     with open(SEARCH_INDEX, "w", encoding="utf-8") as f:
         json.dump(search_data, f, ensure_ascii=False, indent=4)
 
 
 def generate_rss_feed():
-    """Cria um feed RSS com os documentos convertidos"""
     feed = f"""
     <rss version="2.0">
     <channel>

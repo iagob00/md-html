@@ -4,7 +4,7 @@
         <title>Markdown Site Feed</title>
         <link>/</link>
         <description>Atualizações do site gerado</description>
-        <item><title>Exemplo</title><link>exemplo.html</link></item>
+        <item><title>About</title><link>about.html</link></item><item><title>Index</title><link>index.html</link></item><item><title>Contact</title><link>subdir\contact.html</link></item>
     </channel>
     </rss>
     
